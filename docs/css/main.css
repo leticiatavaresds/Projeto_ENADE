@@ -1843,7 +1843,7 @@ header .top-bar .button {
  */
  #apresentacao {
 	background: #ebebeb;
-	padding-top: 12rem;
+	padding-top: 1.5rem;
 	padding-bottom: 30rem;
 	margin-left: -8px;
 	margin-right: -8px;
@@ -1932,7 +1932,7 @@ header .top-bar .button {
 
 #notebook {
 	background: #FFFFFF;
-	padding-top: 12rem;
+	padding-top: 1.5rem;
 	padding-bottom: 12rem;
 	padding-left: 0rem;
 	padding-right: 0rem;
@@ -1949,7 +1949,7 @@ header .top-bar .button {
 #portfolio {
 	background: #ebebeb;
 	/* background: #FFFFFF; */
-	padding-top: 12rem;
+	padding-top: 1.5rem;
 	padding-bottom: 12rem;
 	margin-left: -8px;
 	margin-right: -8px;
