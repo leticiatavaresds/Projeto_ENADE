@@ -1056,7 +1056,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 	max-width: 700px;
 	max-height: 200px;
 	margin-top: 20px;
-	margin-left: 300px;
+	/* margin-left: 300px; */
 	margin-right: auto;
 	/* margin-bottom: 300px; */
 	text-align: center;
@@ -1609,7 +1609,7 @@ header .top-bar .button {
 	border-radius: 4%;
 }
 .button-section [class*="col-"] .button:first-child {
-	margin-right: 6rem;
+	/* margin-right: 6rem; */
 	
 }
 
@@ -2588,7 +2588,7 @@ header .top-bar .button {
 	/* padding-top: 12rem; */
 	/* padding-bottom: 7.2rem; */
 	height: 52%;
-	margin-left: -20px;
+	/* margin-left: -20px; */
 
 }
 #contact .section-intro h1 {
