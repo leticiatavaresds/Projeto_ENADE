@@ -28,7 +28,7 @@ O escopo do projeto é dividido em três partes. Primeiramente, é construído u
 
 # Microdados ENADE
 
-O ENADE, sigla para Exame Nacional de Desempenho de Estudantes, é uma exame anual que tem como objetivo avaliar o conhecimento obtidos em relação aos conteúdos previstos na grade curricular do respectivo curso de graduação dos estudantes acadêmicos que estão prestes a se formar. Dessa forma, todo ano, alunos concluintes do ensino superior são submetidos a uma prova de conhecimento geral e específico composta por questões objetivas e discursivas. Além das questões para avaliar o conhecimento do estudante, as provas também apresentam questionários para obter informações socionômicas e experiências acadêmicas do estudante, além de seu preparo para a prova, percepção sobre a mesma e avaliação da Instituição. Todas essas informações obtidas em cada ano são disponibilizadas pelo INEP como microdadados.
+O ENADE, sigla para Exame Nacional de Desempenho de Estudantes, é um exame anual que tem como objetivo avaliar o conhecimento obtidos em relação aos conteúdos previstos na grade curricular do respectivo curso de graduação dos estudantes acadêmicos que estão prestes a se formar. Dessa forma, todo ano, alunos concluintes do ensino superior são submetidos a uma prova de conhecimento geral e específico composta por questões objetivas e discursivas. Além das questões para avaliar o conhecimento do estudante, as provas também apresentam questionários para obter informações socionômicas e experiências acadêmicas do estudante, além de seu preparo para a prova, percepção sobre a mesma e avaliação da Instituição. Todas essas informações obtidas em cada ano são disponibilizadas pelo INEP como microdadados.
 
 [⬆ Voltar ao topo](#data-warehouse-e-análise-de-dados-enade)<br>
 
@@ -37,7 +37,7 @@ Para o desenvolvimento deste trabalho foram utilizados os microdados do Enade di
 
 As informações são disponibilizadas no formato TXT acompanhadas de um dicionário de variáveis no formato XLS que apresenta uma aba com a descrição do que significa cada atributo e seus possíveis valores e outra aba com atributos identificadores de cada código de cidade disponibilizados pelo IBGE, já que os microdados aprensentam apenas esses códigos na identifição do local do curso.
 
-Além dos dados descritos acima, foram também utilizados nesse trabalho as bases também fornecidas pelo INEP que apresentam o Conceito ENADE de cada ano e podem ser encontradas na página do INEP. Essas bases foram utilizadas com a finalidade de obter atributos referentes à alguns códigos que aparecem no microdados do ENADE como nome da instituição.
+Além dos dados descritos acima, foram também utilizados nesse trabalho as bases também fornecidas pelo INEP que apresentam o Conceito ENADE de cada ano e podem ser encontradas na página do INEP. Essas bases foram utilizadas com a finalidade de obter atributos referentes a alguns códigos que aparecem no microdados do ENADE como nome da instituição.
 
 Para realizar extração de todas os dados listados anteriormente de forma automatizada, utilizou-se o script ```“00_Download_Dados”``` desenvolvido em um notebook jupyter com linguagem python que ao ser executado, realiza o donwload dos microdados do enade e dos dados do Conceito enade e os salva em uma pasta denominada de “Dados” no mesmo diretório em que se encontra o script.
 
@@ -47,28 +47,32 @@ Para realizar extração de todas os dados listados anteriormente de forma autom
 
 No presente trabalho foi utilizada a modelagem Estrela (Star Schema) caracterizada por poucas tabelas e relacionamentos, onde todas as tabelas de Dimensão se relacionam direta e unicamente com a tabela Fato, sendo assim um modelo simples e eficiente.
 
-O modelo elaborado neste trabalho foi desenvolvido com o intuito de ser centrado nas notas das provas, objetivando fornecer dados para análise de fatores que influenciam no desempenho de cada aluno que presta a avaliação. Dessa forma, o modelo apresenta como fato a prova que possui como métrica a nota final e as notas de formação geral e componente específico que a compoem, além de 11 tabelas de dimensão. A modelagem pode ser observada no diagrama abaixo que foi elaborado com a ferramenta Visual Paradigm:
+O modelo elaborado neste trabalho foi desenvolvido com o intuito de ser centrado nas notas das provas, objetivando fornecer dados para análise de fatores que influenciam no desempenho de cada aluno que presta a avaliação. Dessa forma, o modelo apresenta como fato a prova que possui como métrica a nota final e as notas de formação geral incluindo seu componente específico, além de 11 tabelas de dimensão. A modelagem pode ser observada no diagrama abaixo que foi elaborado com a ferramenta Visual Paradigm:
 
 <img align="center" width="900" src="https://github.com/leticiatavaresds/Projeto_ENADE/blob/main/Modelo%20Dimensional%20Estrela/ENADE.png" />
+
+A descrição de cada tabela presente no modelo elaborado e das variáveis que cada uma possui pode ser observada na sessão "Modelo Estrela do ENADE" da página do projeto apresentada neste  [link](https://leticiatavaresds.github.io/Projeto_ENADE/#Modelagem-de-Dados).
 
 [⬆ Voltar ao topo](#data-warehouse-e-análise-de-dados-enade)<br>
 
 # Tratamento de Dados
-Para construção do modelo, o dataset passou foi avaliado e passou por tratamento de dados. O dataset apresenta algumas linhas que não apresentam notas das provas, escolhidas para serem fatos da modelagem e target do modelo, assim foi decidido pela remoção desses casos. Também foi optado pela remoção de nulos da coluna “QI_01” já que foi oberservado que essas amostras também apresentavam valores nulos em quase todas as outras colunas pertencetes ao questionário. Uma outra remoçào foi a de amostras com idades duvidosas como 4 e 11 anos, assim foi criado um filtro para só incluir linhas que apresentam idade maior ou igual à 16. Assim, após todas as remões feitas, o dataset final ficou com 1.291.772 linhas.
+Para construção do modelo, o dataset foi avaliado e passou por tratamento de dados. O dataset apresenta algumas linhas que não apresentam notas das provas, escolhidas para serem fatos da modelagem e target do modelo, assim foi decidido pela remoção desses casos. Também foi optado pela remoção de nulos da coluna “QI_01” já que foi oberservado que essas amostras também apresentavam valores nulos em quase todas as outras colunas pertencetes ao questionário. Uma outra remoçào foi a de amostras com idades duvidosas como 4 e 11 anos, assim foi criado um filtro para só incluir linhas que apresentam idade maior ou igual à 16. Após todas as remões feitas, o dataset final ficou com 1.291.772 linhas.
 
 Outro tratamento feito foi a substituição de valores pelos seus significados apresentados no dicionário de dados nas colunas. Algumas colunas possuiam valores diferentes em cada ano que possuiam o mesmo significado, nesses casos, foram obtidas informaçòes de todos os dicionários para que todos os valores fossem substuídos, ocasionando numa mesma substituição para valores diferentes.
 
 Todas essas manipulações podem ser observadas no script python “01_Criação_Banco_de_Dados.ipynb” na sessão onde as tabelas de dimensão e fato são construídas.
 
-Foi realizada uma Análise de Dados a partir do Data Warehouse construído. Nessa etapa, alguns dos dados foram utilizados para a realização de análises com o objetivo de avaliar a possível influência de alguns fatores socioeconômicos e geográficos na nota de um aluno.
+Todo o tratamento de dados realizado pode ser observado na sessão "Tratamento de Dados" da página do projeto apresentada neste  [link](https://leticiatavaresds.github.io/Projeto_ENADE/#Tratamento-de-Dados).
 
 [⬆ Voltar ao topo](#data-warehouse-e-análise-de-dados-enade)<br>
 
 # Análise Exploratória
 
+Foi realizada uma Análise de Dados a partir do Data Warehouse construído. Nessa etapa, alguns dos dados foram utilizados para a realização de análises com o objetivo de avaliar a possível influência de alguns fatores socioeconômicos e geográficos na nota de um aluno. 
+
 A análise foi realizada no notebook “02_Analise_Exploratória_Dados.ipynb” utilizando python versão 3.8.8 como linguagem de programação onde foram utlizadas as bibliotecas sqlite3 (para conexão com o banco de dados), researchpy (para gerar tabela de análise), plotly (para visualização). O notebook se encontra com as linhas que geram plots comentadas, pois o arquivo fica muito grande e exige muito de ram se forem descomentadas.
-# DW_ENADE
-Repositório para armazenar o trabalho final para a matéria de Data Warehouse do período de 2021.1
+
+A análise pode ser observada na sessão "Análise Exploratória" da página do projeto apresentada neste [link](https://leticiatavaresds.github.io/Projeto_ENADE/#An%C3%A1lise-Explorat%C3%B3ria).
 
 # Modelo de Predição
 Para esse trabalho foi elaborado um modelo de predição que com base alguns dos dados fornecidos pelo estudante (todos os selecionados para compor as dimensões do modelo estrela desenvolvido) classifique se o estudante tirou uma nota acima da nota média do ano em que prestou a prova. Primeiramente, calculou-se a nota média de cada ano utlizando toda a base, com o conhecimento desses valores, criou-se a coluna target que indica se a nota geral do estudante é maior do que a nota média do ano, assim, se o estudante obteve uma nota maior do que a nota geral média do ano em que realizou a prova, a variável será igual à 1, caso contrário, será 0. O modelo tem então o objetivo de classificar essa variável como 1 ou 0 para cada estudante, classificando assim seu desempenho.
@@ -76,6 +80,8 @@ Para esse trabalho foi elaborado um modelo de predição que com base alguns dos
 O modelo foi implementado na linguagem python e pode ser visto no scrpit “03_Aprendizado_Random_Forest_Nota.ipynb”. O algoritmo escolhido para compor o modelo foi o Random Forest com parâmetros iguais a máxima profundadade = 12, número de árvores = 5. O moledo foi treinado com 90% dos dados separados de forma aleatória e testado com os outros 10%. As estísticas e matriz de confusão da predição podem ser vistas na imagens abaixo.
 
 Como grande parde das variáveis eram categóricas e todas as variáveis de entrada para o modelo necessitam ser numéricas, foi feita uma conversão dos dados onde variáveis que só assumiam valores “Sim” ou “Não” foram transformadas em booleanda, variáveis que apresentavam alguma informação numérica ou níveis de intensidade de forma categórica foram interpretadas numéricamente como a coluna de Renda Familiar e por último, todas as as que sobraram foram convertidas utilizando o método Mean Encoding.
+
+A modelo preditório desenvolvido e seu resultado é apresentado na sessão "Modelo de Predição" da página do projeto apresentada neste [link](https://leticiatavaresds.github.io/Projeto_ENADE/#Modelo-de-Predição).
 
 [⬆ Voltar ao topo](#data-warehouse-e-análise-de-dados-enade)<br>
 
